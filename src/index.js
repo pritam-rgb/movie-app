@@ -1,12 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {createStore} from 'redux';
+import {createStore,applyMiddleware} from 'redux';
 import './index.css';
-import movies from './reducers';
+import rootReducer from './reducers';
 import App from './Components/App';
 
+const logger=({dispatch,getState})=>(next)=>(action)=>{
+  console.log("ACTION TYPE",action.type);
+  next(action);
+}
 
-const store=createStore(movies);
+const store=createStore(rootReducer,applyMiddleware(logger));
 
 // console.log("store",store);
 // console.log("Before State",store.getState());
